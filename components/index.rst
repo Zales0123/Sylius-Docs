@@ -10,6 +10,7 @@ PHP Ecommerce Components
     Currency/index
     Locale/index
     Inventory/index
+    ImportExport/index
     Order/index
     Payment/index
     Pricing/index

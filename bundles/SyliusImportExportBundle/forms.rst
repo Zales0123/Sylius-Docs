@@ -1,12 +1,12 @@
 Forms
 =====
 
-The bundle ships with a useful form types for report model, but also for default renderers and data fetchers.
+The bundle ships with a useful form types for export and import profile, but also for default readers and writers.
 
-Report form
+Export form
 ------------
 
-The report form type is named ``sylius_report`` and you can create it whenever you need, using the form factory.
+The export profile form type is named ``sylius_export_profile`` and you can create it whenever you need, using the form factory.
 
 .. code-block:: php
 
@@ -23,116 +23,166 @@ The report form type is named ``sylius_report`` and you can create it whenever y
     {
         public function fooAction(Request $request)
         {
-            $form = $this->get('form.factory')->create('sylius_report');
+            $form = $this->get('form.factory')->create('sylius_export_profile');
         }
     }
 
-The default report form consists of following fields.
+The default export profile form consists of following fields.
 
 +-----------------+----------+
 | Field           | Type     |
 +=================+==========+
 | name            | text     |
 +-----------------+----------+
-| code            | text     |
-+-----------------+----------+
 | description     | textarea |
 +-----------------+----------+
-| renderer        | choice   |
+| code            | text     |
 +-----------------+----------+
-| dataFetcher     | choice   |
+| reader          | choice   |
++-----------------+----------+
+| writer          | choice   |
 +-----------------+----------+
 
 You can render each of these using the usual Symfony way ``{{ form_row(form.description) }}``.
 
-**SyliusReportBundle provides some default data fetchers and renderers. Each of them have custom configuration and adds diffrent part to report form.**
+**SyliusImportExportBundle provides some default export readers and export writers. Each of them have custom configuration and adds diffrent part to export profile form.**
 
-Data fetchers
-##############
+Readers
+########
 
-Basic data fetcher extend same time provider. This implementation results in same configuration fields for three different data fetchers.
+Basic readers extend same time provider. This implementation results in same configuration fields for two different export readers.
 
 .. caution::
 
-    Default data fetchers are part of SyliusCoreBundle, cause they are strictly connected with Sylius database.
+    Default export readers are part of SyliusCoreBundle, cause they are strictly connected with Sylius database.
 
-Already available data fetchers:
-    * User registrations
-    * Sales total
-    * Numbers of orders
+Already available export readers:
+    * Product reader
+    * User reader
 
 +---------------------------+-------------+
 | Field                     | Type        |
 +===========================+=============+
-| Start date                | datetime    |
-+---------------------------+-------------+
-| End date                  | datetime    |
-+---------------------------+-------------+
-| Time period               | choice      |
-+---------------------------+-------------+
-| Print empty records?      | checkbox    |
+| Rows number               | text        |
 +---------------------------+-------------+
 
-Already available time periods:
-    * Daily
-    * Monthly
-    * Yearly
-
-.. note::
-
-   "Print empty records?" is inconspicuous, but really important part of data fetcher form - it can make your report beautiful and clear, or ruin your day with tones of unusable data. Be aware of it! 
-
-
-User registrations
+Product reader
 """"""""""""""""""""
-Provides statistic about user registration in time period
+Provides data of products in your system
 
-Sales total
+User reader
 """"""""""""""""""""
-Provides statistic about total completed sales over time
+Provides data of users in your system
 
-Number of orders
-""""""""""""""""""""
-Provides statistic about number of completed orders over time
 
-Renderers
+Writers
 ############
 
-
-Table Renderer
+Csv Writer
 """"""""""""""""
+
++-----------------+------------+
+| Field           | Type       |
++=================+============+
+| delimiter       | character  |
++-----------------+------------+
+| enclosure       | character  |
++-----------------+------------+
+| file path       | text       |
++-----------------+------------+
+
+Allows to export data to csv file on given file path, formated with given delimiter and enclosure.
+
+
+Import form
+------------
+
+The import profile form type is named ``sylius_import_profile`` and you can create it whenever you need, using the form factory.
+
+.. code-block:: php
+
+    <?php
+
+    // src/Acme/DemoBundle/Controller/DemoController.php
+
+    namespace Acme\DemoBundle\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Request;
+
+    class DemoController extends Controller
+    {
+        public function fooAction(Request $request)
+        {
+            $form = $this->get('form.factory')->create('sylius_import_profile');
+        }
+    }
+
+The default import profile form consists of following fields.
 
 +-----------------+----------+
 | Field           | Type     |
 +=================+==========+
-| template        | choice   |
+| name            | text     |
++-----------------+----------+
+| description     | textarea |
++-----------------+----------+
+| code            | text     |
++-----------------+----------+
+| reader          | choice   |
++-----------------+----------+
+| writer          | choice   |
 +-----------------+----------+
 
-Already available templates:
-    * Default - one simple table
+You can render each of these using the usual Symfony way ``{{ form_row(form.description) }}``.
 
-Chart Renderer
-""""""""""""""""
+**SyliusImportExportBundle provides some default import readers and import writers. Each of them have custom configuration and adds diffrent part to import profile form.**
 
-+-----------------+----------+
-| Field           | Type     |
-+=================+==========+
-| type            | choice   |
-+-----------------+----------+
-| template        | choice   |
-+-----------------+----------+
+Readers
+########
 
-Already available types:
-    * Bar chart
-    * Line chart
-    * Radar chart
-    * Polar chart
-    * Pie chart
-    * Doughnut chart
+Csv Reader
+""""""""""""""""""""
 
-.. note::
++-----------------+------------+
+| Field           | Type       |
++=================+============+
+| delimiter       | character  |
++-----------------+------------+
+| enclosure       | character  |
++-----------------+------------+
+| batch           | text       |
++-----------------+------------+
+| file path       | text       |
++-----------------+------------+
 
-    All chart are rendered at html5 canvas element, with some defaults style and colors, via Chart.js plugin
+Allows to import csv file (from given file path), formatted with given delimiter and enclosure. Import rows number given in batch field.
 
-Already available templates:
-    * Default - one, full-width chart
+
+Writers
+############
+
+Basic writers extend same time provider. This implementation results in same configuration fields for two different import writers.
+
+.. caution::
+
+    Default import writers are part of SyliusCoreBundle, cause they are strictly connected with Sylius database.
+
+
+Already available export readers:
+    * Product reader
+    * User reader
+
++---------------------------+-------------+
+| Field                     | Type        |
++===========================+=============+
+| Update existing records?  | checkbox    |
++---------------------------+-------------+
+
+Product writer
+""""""""""""""""""""
+Allows to import data to products' table in database.
+
+User writer
+""""""""""""""""""""
+Allows to import data to users' table in database.

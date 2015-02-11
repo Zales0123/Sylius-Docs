@@ -6,6 +6,7 @@
 * :doc:`/bundles/SyliusContactBundle/index`
 * :doc:`/bundles/SyliusFlowBundle/index`
 * :doc:`/bundles/SyliusInventoryBundle/index`
+* :doc:`/bundles/SyliusImportExportBundle/index`
 * :doc:`/bundles/SyliusOmnipayBundle/index`
 * :doc:`/bundles/SyliusOrderBundle/index`
 * :doc:`/bundles/SyliusProductBundle/index`

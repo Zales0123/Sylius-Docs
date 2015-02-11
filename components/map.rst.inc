@@ -5,6 +5,7 @@
 * :doc:`/components/Contact/index`
 * :doc:`/components/Currency/index`
 * :doc:`/components/Inventory/index`
+* :doc:`/components/ImportExport/index`
 * :doc:`/components/Order/index`
 * :doc:`/components/Payment/index`
 * :doc:`/components/Pricing/index`

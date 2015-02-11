@@ -1,20 +1,6 @@
 Summary
 =======
 
-Configuration reference
------------------------
-
-.. code-block:: yaml
-
-    sylius_report:
-        driver: ~
-        classes:
-            report:
-                model: Sylius\Component\Report\Model\Report
-                costroller: Sylius\Bundle\ReportBundle\Controller\ReportController
-                repository: ~
-                form: Sylius\Bundle\ReportBundle\Form\Type\ReportType
-
 Tests
 -----
 

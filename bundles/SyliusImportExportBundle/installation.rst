@@ -8,14 +8,14 @@ If you have `Composer installed globally <http://getcomposer.org/doc/00-intro.md
 
 .. code-block:: bash
 
-    $ composer require "sylius/report-bundle"
+    $ composer require "sylius/import-export-bundle"
 
 Otherwise you have to download .phar file.
 
 .. code-block:: bash
 
     $ curl -sS https://getcomposer.org/installer | php
-    $ php composer.phar require "sylius/report-bundle"
+    $ php composer.phar require "sylius/import-export-bundle"
 
 Adding required bundles to the kernel
 -------------------------------------
@@ -38,7 +38,7 @@ Don't worry, everything was automatically installed via Composer.
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
-            new Sylius\Bundle\ProductBundle\SyliusReportBundle(),
+            new Sylius\Bundle\ProductBundle\SyliusImportExportBundle(),
             new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
 
             // Other bundles...
@@ -57,7 +57,7 @@ Put this configuration inside your ``app/config/config.yml``.
 
 .. code-block:: yaml
 
-    sylius_report:
+    sylius_import_export:
         driver: doctrine/orm # Configure the doctrine orm driver used in the documentation.
 
 Routing configuration
@@ -67,8 +67,8 @@ Add the following to your ``app/config/routing.yml``.
 
 .. code-block:: yaml
 
-    sylius_report:
-        resource: @SyliusReportBundle/Resources/config/routing.yml
+    sylius_import_export:
+        resource: @SyliusImportExportBundle/Resources/config/routing.yml
 
 Updating database schema
 ------------------------
